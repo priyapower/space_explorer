@@ -1,4 +1,4 @@
-import { InMemoryCache, Reference } from '@apollo/client';
+import { InMemoryCache, Reference, makeVar } from '@apollo/client';
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
@@ -23,4 +23,13 @@ export const cache: InMemoryCache = new InMemoryCache({
       }
     }
   }
+});
+
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+  cache,
+  uri: 'http://localhost:4000/graphql',
+  headers: {
+    authorization: localStorage.getItem('token') || '',
+  },
+  typeDefs,
 });
